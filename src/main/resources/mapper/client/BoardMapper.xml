@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hospital.client.mapper.BoardMapper">
+	<insert id="boardinsert">
+		insert into board (user_id,board_title,board_content, writeday) 
+		values (#{user_id},#{board_title},#{board_content},now()) 
+	</insert>
+	
+	<select id="boardlist" resultType="HashMap">
+		select * from board
+		order by board_id desc 
+	</select>
+	<update id="boardReadnum">
+		update board
+		set board_readnum=board_readnum+1
+		where board_id=#{board_id}
+	</update>
+	<select id="boardcontent" resultType="kr.co.hospital.client.dto.BoardDto">
+		select * from board
+		where board_id=#{board_id}
+	</select>
+	<delete id="boarddelete">
+		delete from board
+		where board_id=#{board_id} and user_id=#{user_id}
+	</delete>
+	<update id="boardupdateOk">
+		update board
+		set board_title=#{board_title}, board_content=#{board_content}
+		where board_id=#{board_id}
+	</update>
+</mapper>
